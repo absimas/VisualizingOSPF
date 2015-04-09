@@ -28,7 +28,7 @@ public abstract class BaseFrame extends JFrame {
 	private void customizeFrame() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setUndecorated(false);
-		resizeToFitInScreen(this, (double) 2 / 5);
+		resizeToFitInScreen(this, (double) 3 / 5);
 		setLocationRelativeTo(null);
 	}
 

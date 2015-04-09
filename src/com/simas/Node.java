@@ -19,36 +19,12 @@ import static com.simas.BaseFrame.log;
  * Created by Simas Abramovas on 2015 Apr 08.
  */
 
-public class Node extends JLabel {
+public abstract class Node extends JLabel {
 
-	private static final String IMAGE_FILENAME = "router.png";
-	public static final Dimension SIZE = new Dimension(100, 68);
-	private static Image sImage;
-	private static int sNodeCount = 0;
 	// Label
 	private static final int LABEL_SIZE = 26;
 	private static final float LABEL_BG_OPACITY = 0.2f;
 	private static final Color LABEL_COLOR = Color.WHITE;
-
-	static {
-		try {
-			Image image = ImageIO.read(new File(IMAGE_FILENAME));
-			// Scale
-			sImage = image.getScaledInstance(SIZE.width, SIZE.height,
-					Image.SCALE_SMOOTH);
-			// Force image measuring
-			sImage.getWidth(null);
-			sImage.getHeight(null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public Node() {
-		super(new ImageIcon(sImage));
-		setSize(SIZE);
-		addLabel();
-	}
 
 	/**
 	 * Sets the size, location and adds itself to given parent automatically
@@ -56,17 +32,15 @@ public class Node extends JLabel {
 	 * @param x            x axis location
 	 * @param y            y axis location
 	 */
-	public Node(Container container, int x, int y) {
-		super(new ImageIcon(sImage));
-		setSize(SIZE);
+	public Node(Container container, int x, int y, Image image) {
+		super(new ImageIcon(image));
 		setLocation(x, y);
 		container.add(this);
-		addLabel();
 	}
 
-	private void addLabel() {
+	protected void addLabel(String name) {
 		// Create a text label
-		JLabel text = new JLabel(String.valueOf(++sNodeCount));
+		JLabel text = new JLabel(name);
 		text.setOpaque(true);
 		text.setFont(new Font("Helvetica", Font.PLAIN, LABEL_SIZE));
 
@@ -85,9 +59,7 @@ public class Node extends JLabel {
 		setVisible(true);
 	}
 
-	public Point getCenter() {
-		return new Point(getSize().width / 2, getSize().height / 2);
-	}
+	public abstract Point getCenter();
 
 	public Point getCenterLocation() {
 		Point location = getLocation();
