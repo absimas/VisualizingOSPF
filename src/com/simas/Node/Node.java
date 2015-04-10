@@ -1,4 +1,4 @@
-package com.simas;
+package com.simas.Node;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -7,13 +7,10 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Image;
 import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.Rectangle;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-import static com.simas.BaseFrame.log;
 
 /**
  * Created by Simas Abramovas on 2015 Apr 08.
@@ -22,7 +19,8 @@ import static com.simas.BaseFrame.log;
 public abstract class Node extends JLabel {
 
 	// Label
-	private static final int LABEL_SIZE = 26;
+
+	private static final int LABEL_SIZE = 22;
 	private static final float LABEL_BG_OPACITY = 0.2f;
 	private static final Color LABEL_COLOR = Color.WHITE;
 
@@ -61,7 +59,7 @@ public abstract class Node extends JLabel {
 
 	public abstract Point getCenter();
 
-	public Point getCenterLocation() {
+	public Point getCenterLocationOnScreen() {
 		Point location = getLocation();
 		// Move by parent's spacing
 		Point parent = getParent().getLocation();
@@ -69,6 +67,17 @@ public abstract class Node extends JLabel {
 		// Move to center of node
 		location.translate(getCenter().x, getCenter().y);
 		return location;
+	}
+
+	public Point getCenterLocation() {
+		Point location = getLocation();
+		// Move to center of node
+		location.translate(getCenter().x, getCenter().y);
+		return location;
+	}
+
+	public Rectangle getRect() {
+		return new Rectangle(getLocation(), getSize());
 	}
 
 }
