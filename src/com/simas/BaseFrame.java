@@ -46,7 +46,7 @@ public abstract class BaseFrame extends JFrame {
 		frame.setLocationRelativeTo(null); // Center frame on the screen
 	}
 
-	static void log(Object obj) {
+	public static void log(Object obj) {
 		System.out.println(obj);
 	}
 

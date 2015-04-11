@@ -36,15 +36,24 @@ public abstract class Node extends JLabel {
 		container.add(this);
 	}
 
-	protected void addLabel(String name) {
+	protected void addLabel(String name, int maxWidth) {
 		// Create a text label
 		JLabel text = new JLabel(name);
 		text.setOpaque(true);
-		text.setFont(new Font("Helvetica", Font.PLAIN, LABEL_SIZE));
+		int wantedSize = LABEL_SIZE;
+		text.setFont(new Font("Helvetica", Font.PLAIN, wantedSize));
+
+		// get metrics from the graphics
+		FontMetrics metrics = text.getFontMetrics(text.getFont());
+		int textWidth = metrics.stringWidth(name);
+		while (textWidth > maxWidth) {
+			text.setFont(new Font("Helvetica", Font.PLAIN, --wantedSize));
+			metrics = text.getFontMetrics(text.getFont());
+			textWidth = metrics.stringWidth(name);
+		}
 
 		// Measure
-		FontMetrics metrics = text.getFontMetrics(text.getFont());
-		Dimension size = new Dimension(metrics.stringWidth(text.getText()), metrics.getHeight());
+		Dimension size = new Dimension(textWidth, metrics.getHeight());
 		text.setSize(size);
 
 		// Center
